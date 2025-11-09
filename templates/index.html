@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predicción de Cancelación de Reserva</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            color: #eee;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        form {
+            background: #d8d8d8;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 10px #767676;
+            width: 350px;
+        }
+        label, select, input {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            color:#000;
+        }
+        input, select {
+            padding: 8px;
+            border: none;
+            border-radius: 6px;
+        }
+        button {
+            background-color: #6e4b04;
+            color: #ffffff;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+        h2 { color: #3f9c11; }
+    </style>
+</head>
+<body>
+    <h2>Predicción de Cancelación de Reserva</h2>
+    <form action="/predict" method="post">
+        <label for="lead_time">Lead Time:</label>
+        <input type="number" step="any" name="lead_time" required>
+
+        <label for="adr">ADR (Tarifa promedio diaria):</label>
+        <input type="number" step="any" name="adr" required>
+
+        <label for="total_of_special_requests">Solicitudes Especiales:</label>
+        <input type="number" name="total_of_special_requests" required>
+
+        <label for="booking_changes">Cambios en la Reserva:</label>
+        <input type="number" name="booking_changes" required>
+
+        <label for="deposit_type">Tipo de Depósito:</label>
+        <select name="deposit_type" required>
+            <option value="No Deposit">No Deposit</option>
+            <option value="Non Refund">Non Refund</option>
+            <option value="Refundable">Refundable</option>
+        </select>
+
+        <button type="submit">Predecir</button>
+    </form>
+
+    {% if prediction %}
+        <h3 style="margin-top:20px; color: #000;">{{ prediction }}</h3>
+    {% endif %}
+</body>
+</html>
